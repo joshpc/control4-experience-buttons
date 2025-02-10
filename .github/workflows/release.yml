@@ -30,10 +30,22 @@ jobs:
           zip -r ../uibutton_ps5.c4z ./*
           cd ..
 
+      - name: Find available tag
+        id: tag
+        run: |
+          BASE_TAG="v${{ steps.date.outputs.VERSION }}"
+          TAG=$BASE_TAG
+          COUNT=2
+          while git ls-remote --exit-code origin refs/tags/$TAG >/dev/null 2>&1; do
+            TAG="${BASE_TAG}.${COUNT}"
+            COUNT=$((COUNT + 1))
+          done
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
+
       - name: Create Tag
         run: |
-          git tag v${{ steps.date.outputs.VERSION }}
-          git push origin v${{ steps.date.outputs.VERSION }}
+          git tag ${{ steps.tag.outputs.TAG }}
+          git push origin ${{ steps.tag.outputs.TAG }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

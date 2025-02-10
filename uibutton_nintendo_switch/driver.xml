@@ -42,7 +42,7 @@ Although it is not possible to control this device from Control4 this driver ena
 		</commands>
 	</config>
 	<proxies>
-		<proxy proxybindingid="5001" name="Playstation 5" primary="True" image_source="c4z" large_image="icons/device_lg.png" small_image="icons/device_sm.png">uibutton</proxy>
+		<proxy proxybindingid="5001" name="Nintendo Switch" primary="True" image_source="c4z" large_image="icons/device_lg.png" small_image="icons/device_sm.png">uibutton</proxy>
 	</proxies>
 	<capabilities>
 		<navigator_display_option proxybindingid="5001">
