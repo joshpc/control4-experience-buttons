@@ -37,7 +37,7 @@ jobs:
           TAG=$BASE_TAG
           COUNT=2
           while git ls-remote --exit-code origin refs/tags/$TAG >/dev/null 2>&1; do
-            TAG="${BASE_TAG}.${COUNT}"
+            TAG="${BASE_TAG}-${COUNT}"
             COUNT=$((COUNT + 1))
           done
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
@@ -48,11 +48,10 @@ jobs:
           git push origin ${{ steps.tag.outputs.TAG }}
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.date.outputs.VERSION }}
           name: Release v${{ steps.date.outputs.VERSION }}
           files: |
-            uibutton_nintendo_switch.c4z
-            uibutton_ps5.c4z
+            *.c4z
           generate_release_notes: true
