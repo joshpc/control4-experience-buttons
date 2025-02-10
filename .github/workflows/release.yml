@@ -1,0 +1,46 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get current date
+        id: date
+        run: echo "VERSION=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+
+      - name: Package Nintendo Switch Driver
+        run: |
+          cd uibutton_nintendo_switch
+          zip -r ../uibutton_nintendo_switch.c4z ./*
+          cd ..
+
+      - name: Package PS5 Driver
+        run: |
+          cd uibutton_ps5
+          zip -r ../uibutton_ps5.c4z ./*
+          cd ..
+
+      - name: Create Tag
+        run: |
+          git tag v${{ steps.date.outputs.VERSION }}
+          git push origin v${{ steps.date.outputs.VERSION }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.date.outputs.VERSION }}
+          name: Release v${{ steps.date.outputs.VERSION }}
+          files: |
+            uibutton_nintendo_switch.c4z
+            uibutton_ps5.c4z
+          generate_release_notes: true
