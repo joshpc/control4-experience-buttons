@@ -1,0 +1,1 @@
+Pillow>=10.0.0  # Python Imaging Library fork, needed for image processing
