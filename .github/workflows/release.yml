@@ -50,8 +50,8 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.date.outputs.VERSION }}
-          name: Release v${{ steps.date.outputs.VERSION }}
+          tag_name: ${{ steps.tag.outputs.TAG }}
+          name: Release ${{ steps.tag.outputs.TAG }}
           files: |
             *.c4z
           generate_release_notes: true
